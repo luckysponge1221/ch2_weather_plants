@@ -42,9 +42,6 @@ struct SecondScreen: View {
                 )
                 .datePickerStyle(.graphical)
                 .tint(Color.graccentcolor)
-
-                
-                //Spacer()
                 
                 // Filtered Plant list
                 GeometryReader { geo in

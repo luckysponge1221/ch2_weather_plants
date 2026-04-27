@@ -12,12 +12,6 @@ struct DetailCuacaView: View {
 //    @Binding var isShowDetailCuaca: Bool
     
     var body: some View {
-        
-        
-        
-        
-        
-        
         VStack {
             ZStack {
                 Rectangle()
@@ -50,7 +44,7 @@ struct DetailCuacaView: View {
                         .font(.title)
                         .bold()
                     
-                    Text("Today, 21 April 2026")
+                    Text("Today, \(Date().formatted(date: .long, time: .omitted))")
                         .foregroundStyle(Color(.white))
                         .font(.subheadline)
                     
