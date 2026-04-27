@@ -291,6 +291,7 @@ struct FirstScreen: View {
         }
         .ignoresSafeArea(edges: .bottom)
     }
+    
 }
 
 #Preview {
