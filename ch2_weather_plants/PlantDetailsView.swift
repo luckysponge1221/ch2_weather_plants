@@ -47,7 +47,7 @@ struct PlantDetailsView: View {
                 ZStack {
                     Circle()
                         .fill(RadialGradient(colors: [.white, .bgshapeblurry], center: .center, startRadius: 20, endRadius: 400,))
-                        .frame(width: 300, height: 300)
+                        .frame(width: 250, height: 250)
                         .cornerRadius(20)
 //                        .foregroundStyle(Color.bgshapeblurry.opacity(0.4))
                         .padding(.horizontal)
@@ -57,9 +57,9 @@ struct PlantDetailsView: View {
                     
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 350)
-                        .rotationEffect(Angle(degrees: 90))
-                        .offset(x: 5, y: -70)
+                        .frame(width: 200)
+//                        .rotationEffect(Angle(degrees: 90))
+//                        .offset(x: 5, y: -70)
                 }
                 
                 VStack {
@@ -167,7 +167,7 @@ struct PlantDetailsView: View {
                         ZStack {
                             Rectangle()
                                 .foregroundStyle(Color.darkgreen)
-                                .frame(width: 120, height: 50)
+                                .frame(width: 120)
                                 .cornerRadius(30)
                             
                             Text("Plant")
