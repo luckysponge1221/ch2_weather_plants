@@ -45,9 +45,9 @@ struct PlantDetailsView: View {
                 .padding()
                 
                 ZStack {
-                    Rectangle()
+                    Circle()
                         .fill(RadialGradient(colors: [.white, .bgshapeblurry], center: .center, startRadius: 20, endRadius: 400,))
-                        .frame(width: 260, height: 220)
+                        .frame(width: 300, height: 300)
                         .cornerRadius(20)
 //                        .foregroundStyle(Color.bgshapeblurry.opacity(0.4))
                         .padding(.horizontal)
