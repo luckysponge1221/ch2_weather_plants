@@ -9,19 +9,26 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        TabView {
-            FirstScreen()
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
+        HStack {
+            TabView {
+                FirstScreen()
+                    .tabItem {
+                        Label("Home", systemImage: "house.fill")
+                    }
+                
+                SecondScreen()
+                    .tabItem {
+                        Label("Calendar", systemImage: "calendar")
+                    }
+                
+                
                 }
             
-            SecondScreen()
-                .tabItem {
-                    Label("Calendar", systemImage: "calendar")
-                }
+            
+            .tint(Color.graccentcolor)
             }
-        .tint(Color.graccentcolor)
         }
+        
     }
 
 #Preview {

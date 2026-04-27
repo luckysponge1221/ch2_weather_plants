@@ -12,11 +12,18 @@ struct DetailCuacaView: View {
 //    @Binding var isShowDetailCuaca: Bool
     
     var body: some View {
-        VStack {
-            ZStack {
-                Rectangle()
+        
+        
+        
+        
+        
+        
+        
+        ZStack {
+            
+            Rectangle()
                     .fill(LinearGradient(colors: [.gr1, .gr2], startPoint: .bottomLeading, endPoint: .topTrailing))
-                    .frame(height: 650)
+                    .frame(height: 610)
                     .cornerRadius(50)
                     .overlay {
                         Circle()
@@ -64,15 +71,87 @@ struct DetailCuacaView: View {
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Color.white)
+                    
+                    ZStack {
+                        Rectangle()
+                            .cornerRadius(35)
+                            .frame(height: 100)
+                            .opacity(0.4)
+                            .padding(20)
+                            
+                        HStack {
+                            VStack {
+                                Image(systemName:"sun.max.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                
+                                
+                                Text("24 km/h")
+                                    .bold()
+                                    .foregroundStyle(Color(.white))
+
+                                
+                                Text("Wind")
+                                    .font(.caption)
+                                    .foregroundStyle(Color(.white))
+                            }
+                            Spacer()
+                            
+                            Divider()
+                                .frame( width: 1, height: 60)
+                                .background(Color.white)
+                            
+                            Spacer()
+                            
+                            VStack {
+                                Image(systemName:"sun.max.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                
+                                
+                                Text("24 km/h")
+                                    .bold()
+                                    .foregroundStyle(Color(.white))
+
+                                
+                                Text("Humidity")
+                                    .font(.caption)
+                                    .foregroundStyle(Color(.white))
+                                
+                            }
+                            
+                            Spacer()
+                            
+                            Divider()
+                                .frame( width: 1, height: 60)
+                                .background(Color.white)
+                            
+                            Spacer()
+                            
+                            VStack {
+                                Image(systemName:"sun.max.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                
+                                
+                                Text("24 km/h")
+                                    .bold()
+                                    .foregroundStyle(Color(.white))
+
+                                
+                                Text("Precipitation")
+                                    .font(.caption)
+                                    .foregroundStyle(Color(.white))
+                                
+                            }
+                            
+                        }
+                        .padding(.horizontal, 50)
+                    }
                         
                 }
-                .offset(y: -30)
+                .offset(y: 50)
+                
             }
-            
-            
-        }
-        .frame(maxHeight: .infinity, alignment: .top)
-        .offset(y: -70)
+        .ignoresSafeArea()
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
 
 //                        .glassEffect()

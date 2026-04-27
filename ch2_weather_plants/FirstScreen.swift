@@ -81,6 +81,8 @@ struct FirstScreen: View {
                         Image(systemName: "mappin.and.ellipse")
                             .font(.system(size: 25, design: .rounded))
                             .foregroundColor(Color.graccentcolor)
+                        
+                            
                     }
                     
                     VStack(alignment: .leading) {
@@ -171,12 +173,14 @@ struct FirstScreen: View {
                     }
                 }
                 
+                Spacer()
                 // TITLE
                 Text("What \(Text("Plants").bold()) Will You Plant \(Text("This Week?").bold())")
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
+                Spacer()
                 // CARD
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack{

@@ -35,68 +35,136 @@ struct SecondScreen: View {
             
             VStack {
                 // Calendar
-                DatePicker(
-                    "Select Month",
-                    selection: $selectedDate,
-                    displayedComponents: [.date]
-                )
-                .datePickerStyle(.graphical)
-                .tint(Color.graccentcolor)
+                ZStack {
+                    
+//                    Rectangle()
+//                        .fill(RadialGradient(colors: [.white, .bgshapeblurry], center: .center, startRadius: 20, endRadius: 400,))
+//                        .frame(width: 380, height: 370)
+//                        .clipShape(RoundedRectangle(cornerRadius: 20))
+//                        .padding(.horizontal, 10)
+                       
+                    
+                    DatePicker(
+                        "Select Month",
+                        selection: $selectedDate,
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(.graphical)
+                    .tint(Color.graccentcolor)
+                    .cornerRadius(20)
+                    .padding(.horizontal, 40)
+                }
+
+
                 
+                Spacer()
                 // Filtered Plant list
-                GeometryReader { geo in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Plants of the Month")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color.white)
-                            Spacer()
-                        }
-                        .padding(.vertical)
+                ZStack {
+                    
+                    Rectangle()
+                        .fill(LinearGradient(colors: [.gr2, .gr1], startPoint: .bottomLeading, endPoint: .topTrailing))
+//                        .frame(height: 650)
+                        .cornerRadius(20)
+                        .overlay {
+                            Circle()
+                                .fill(LinearGradient(colors: [.gr2, .gr1], startPoint: .top, endPoint: .bottomTrailing))
+                                .frame(width: 600, height: 600)
+                                .offset(x: 0, y: 200)
+                                .opacity(0.3)
+                            
+                            Circle()
+                                .fill(LinearGradient(colors: [.gr1, .gr2], startPoint: .top, endPoint: .bottomTrailing))
+                                .frame(width: 400, height: 400)
+                                .offset(x: 0, y: 200)
+                                .opacity(0.3)
+                            
+                            Circle()
+                                .fill(LinearGradient(colors: [.gr2, .gr1], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                .frame(width: 200, height: 200)
+                                .offset(x: 0, y: 200)
+                                .opacity(0.5)
+                        } .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding(.horizontal, 20)
                         
-                        ScrollView(.vertical) {
-                            ForEach(filteredItems, id: \.name) { item in
-                                HStack (alignment: .center) {
-                                    ZStack {
-                                        Circle()
-                                            .frame(height: 60)
-                                            .foregroundStyle(Color.bgshapeblurry)
-                                        Image(item.image)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 50, height: 50)
-                                    }
-                                    VStack(alignment: .leading) {
-                                        Text(item.name)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(Color.white)
-                                        Text(item.description)
-                                            .font(.callout)
-                                            .foregroundStyle(Color.white)
-                                            .lineLimit(1)
-                                    }
+                    
+                    GeometryReader { geo in
+                        VStack() {
+                            HStack {
+                                ZStack {
+                                    
+                                    
+                                    Rectangle()
+                                        .fill(RadialGradient(colors: [.white, .bgshapeblurry], center: .center, startRadius: 20, endRadius: 200,))
+                                        .frame(width: 250, height: 40)
+                                        .cornerRadius(20)
+                                        .padding(.horizontal, 10)
+                                    
+                                    
+                                    
+                                    Text("Plants Of The Month")
+                                            .font(.title3)
+                                            .bold()
+                                            
+                                    
+                                    
+                                        
                                 }
-                                .onTapGesture {
-                                    selectedPlant = item
-                                    isVisible = true
-                                }
+                                
                             }
+//                            .padding(.vertical)
+                            
+                            ScrollView(.vertical) {
+                                
+                                    VStack(alignment: .leading) {
+                                        ForEach(filteredItems, id: \.name) { item in
+                                        HStack () {
+                                            ZStack {
+                                                
+                                                Circle()
+                                                    .frame(height: 60)
+                                                    .foregroundStyle(Color.bgshapeblurry)
+                                                Image(item.image)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 50, height: 50)
+                                            }
+                                            
+                                            VStack(alignment: .leading) {
+                                                Text(item.name)
+                                                    .font(.headline)
+                                                    .foregroundStyle(Color.white)
+                                                Text(item.description)
+                                                    .font(.caption)
+                                                    .foregroundStyle(Color.white)
+                                                    .lineLimit(1)
+                                                
+                                                Divider()
+                                                    .background(Color.white)
+                                            }
+                                        }
+                                        
+                                        .onTapGesture {
+                                            selectedPlant = item
+                                            isVisible = true
+                                        }
+                                    }
+                                }
+                            } .padding(20)
                         }
-                    }
-                    .padding()
-                    .frame(height: geo.size.height)
-                    .background(Color.gr2)
-                    .cornerRadius(30)
-                    .sheet(isPresented: $isVisible) {
-                        if let plant = selectedPlant {
-                            PlantDetailsView(isShowDetail: $isVisible, plant: plant)
+                        .padding()
+                        //                    .frame(height: geo.size.height)
+                        //                    .background(Color.gr2)
+                        .cornerRadius(30)
+                        .sheet(isPresented: $isVisible) {
+                            if let plant = selectedPlant {
+                                PlantDetailsView(isShowDetail: $isVisible, plant: plant)
+                            }
                         }
                     }
                 }
             }
         }
-        .ignoresSafeArea(edges: .bottom)
+//        .ignoresSafeArea(edges: .bottom)
     }
 }
 
