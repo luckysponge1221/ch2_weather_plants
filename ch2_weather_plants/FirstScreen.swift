@@ -14,23 +14,42 @@ struct HourlyForecast: Identifiable {
     var temperature: Int
 }
 
-var hourlyForecastsData = [
-    HourlyForecast(time: "Now", icon: "sun.max.fill", temperature: 28),
-    HourlyForecast(time: "12", icon: "cloud.fill", temperature: 32),
-    HourlyForecast(time: "13", icon: "sun.max.fill", temperature: 28),
-    HourlyForecast(time: "14", icon: "cloud.rain.fill", temperature: 28),
-    HourlyForecast(time: "12", icon: "cloud.fill", temperature: 32),
-    HourlyForecast(time: "13", icon: "sun.max.fill", temperature: 28),
-    HourlyForecast(time: "14", icon: "cloud.rain.fill", temperature: 28),
-    HourlyForecast(time: "12", icon: "cloud.fill", temperature: 32),
-    HourlyForecast(time: "13", icon: "sun.max.fill", temperature: 28),
-    HourlyForecast(time: "14", icon: "cloud.rain.fill", temperature: 28),
-]
+func getHourlyForecast() -> [HourlyForecast] {
+    let startHour = Calendar.current.component(.hour, from: Date())
+    let weatherIcons = ["cloud.fill", "cloud.sun.fill", "cloud.rain.fill", "cloud.snow.fill", "cloud.bolt.fill"]
+    
+    var displayHours: [HourlyForecast] = []
+    
+    displayHours.append(HourlyForecast(time: "Now", icon: weatherIcons.randomElement()!, temperature: Int.random(in: 25...36)))
+    
+    for i in 1..<24 {
+        let targetHour = (startHour + i) % 24
+        let timeString = String(format: "%02d", targetHour)
+        
+        // Creating new object for each hour
+        let newForecast = HourlyForecast(
+            time: timeString,
+            icon: weatherIcons.randomElement()!,
+            temperature: Int.random(in: 25...36)
+        )
+        displayHours.append(newForecast)
+    }
+    return displayHours
+}
 
 struct FirstScreen: View {
     
     @State var isShowDetail: Bool = false
     @State var isShowDetailCuaca: Bool = false
+    @State var isVisible = false
+    @State private var selectedPlant: SeasonalItem?
+    @State private var hourlyForecasts: [HourlyForecast] = []
+    
+    var filteredItems: [SeasonalItem] { // computed property
+        let currentMonth = Calendar.current.component(.month, from: Date())
+        
+        return items.filter{ $0.harvestMonthsMain.contains(currentMonth) || $0.harvestMonthsSec.contains(currentMonth) }
+    }
     
     var body: some View {
         ZStack {
@@ -120,7 +139,8 @@ struct FirstScreen: View {
                                 .frame(width: 200, height: 200)
                                 .offset(x: 150, y: 30)
                             
-                        } .clipShape(RoundedRectangle(cornerRadius: 20))
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .padding(.horizontal, 20)
                 
                     HStack {
@@ -155,8 +175,7 @@ struct FirstScreen: View {
                 
                 Spacer()
                 // TITLE
-                
-                Text("What \(Text("Vegetables").bold()) Will You Plant \(Text("This Week?").bold())")
+                Text("What \(Text("Plants").bold()) Will You Plant \(Text("This Week?").bold())")
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
@@ -165,7 +184,7 @@ struct FirstScreen: View {
                 // CARD
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack{
-                        ForEach(items, id:\.name) {i in
+                        ForEach(filteredItems, id:\.name) {i in
                             ZStack {
                                 Rectangle()
                                     .fill(Color.bgshapeblurry)
@@ -186,13 +205,22 @@ struct FirstScreen: View {
                                             .padding(.horizontal, 10)
                                         
                                         Text(i.name)
-                                                .font(.title3)
-                                                .bold()
+                                            .font(.title3)
+                                            .bold()
                                     }
                                 }
                                 .frame(width: 230, height: 260)
                                 .padding(0)
                             }
+                            .onTapGesture {
+                                selectedPlant = i
+                                isVisible = true
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $isVisible) {
+                        if let plant = selectedPlant {
+                            PlantDetailsView(isShowDetail: $isVisible, plant: plant)
                         }
                     }
                 }
@@ -227,23 +255,26 @@ struct FirstScreen: View {
                     VStack {
                         ScrollView(.horizontal) {
                             HStack(spacing: 20){
-                                ForEach(hourlyForecastsData) { hourlyForecast in
+                                ForEach(hourlyForecasts) { hour in
                                     VStack(alignment: .center, spacing: 5) {
-                                        Text(hourlyForecast.time)
+                                        Text(hour.time)
                                         
                                         Spacer()
                                         
-                                        Image(systemName: hourlyForecast.icon)
+                                        Image(systemName: hour.icon)
                                             .symbolRenderingMode(.multicolor)
                                         
                                         Spacer()
                                         
-                                        Text("\(hourlyForecast.temperature)º")
+                                        Text("\(hour.temperature)º")
                                     }
                                     .onTapGesture {
                                         isShowDetail = true
                                     }
                                 }
+                            }
+                            .onAppear {
+                                self.hourlyForecasts = getHourlyForecast()
                             }
                         }
                         .padding(20)

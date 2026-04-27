@@ -51,7 +51,7 @@ struct DetailCuacaView: View {
                         .font(.title)
                         .bold()
                     
-                    Text("Today, 21 April 2026")
+                    Text("Today, \(Date().formatted(date: .long, time: .omitted))")
                         .foregroundStyle(Color(.white))
                         .font(.subheadline)
                     
